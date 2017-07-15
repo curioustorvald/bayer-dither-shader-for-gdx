@@ -23,8 +23,6 @@ int bayer[8][8] = {
 float bayerSize = 8.0;
 float bayerDivider = bayerSize * bayerSize;
 
-uniform float spread = 1.0 / (0.299 * (rcount - 1.0) + 0.587 * (gcount - 1.0) + 0.114 * (bcount - 1.0));  // this spread value is optimised one -- try your own values for various effects!
-
 
 vec4 nearestColour(vec4 incolor) {
     vec4 rgbaCounts = vec4(rcount, gcount, bcount, acount);
@@ -47,6 +45,9 @@ vec4 nearestColour(vec4 incolor) {
 }
 
 void main(void) {
+    float spread = 1.0 / (0.299 * (rcount - 1.0) + 0.587 * (gcount - 1.0) + 0.114 * (bcount - 1.0));  // this spread value is optimised one -- try your own values for various effects!
+
+
     // create texture coordinates based on pixelSize //
     vec4 inColor = texture2D(u_texture, v_texCoords);
 
