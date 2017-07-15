@@ -23,7 +23,7 @@ int bayer[8][8] = {
 float bayerSize = 8.0;
 float bayerDivider = bayerSize * bayerSize;
 
-float spread = 1.0 / (0.299 * (rcount - 1.0) + 0.587 * (gcount - 1.0) + 0.114 * (bcount - 1.0));  // this spread value is optimised one -- try your own values for various effects!
+uniform float spread = 1.0 / (0.299 * (rcount - 1.0) + 0.587 * (gcount - 1.0) + 0.114 * (bcount - 1.0));  // this spread value is optimised one -- try your own values for various effects!
 
 
 vec4 nearestColour(vec4 incolor) {
