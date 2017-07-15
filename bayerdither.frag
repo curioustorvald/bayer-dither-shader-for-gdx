@@ -3,8 +3,13 @@ varying vec2 v_texCoords;
 uniform sampler2D u_texture;
 
 
+// "steps" of R, G and B. Must be integer && equal or greater than 2
+uniform float rcount = 4.0;
+uniform float gcount = 4.0;
+uniform float bcount = 4.0;
+uniform float acount = 1.0;
 
-uniform float monitorGamma; // give 2.2f using 'shader.setUniformf("monitorGamma", 2.2f)'
+
 
 int bayer[8][8] = {
 { 0,32, 8,40, 2,34,10,42}, // 8x8 bayer ordered dithering
@@ -18,9 +23,11 @@ int bayer[8][8] = {
 float bayerSize = 8.0;
 float bayerDivider = bayerSize * bayerSize;
 
+float spread = 1.0 / (0.299 * (rcount - 1.0) + 0.587 * (gcount - 1.0) + 0.114 * (bcount - 1.0));  // this spread value is optimised one -- try your own values for various effects!
+
 
 vec4 nearestColour(vec4 incolor) {
-    vec4 rgbaCounts = vec4(4.0, 4.0, 4.0, 1.0); // "steps" of R, G and B. Must be integer && equal or greater than 2
+    vec4 rgbaCounts = vec4(rcount, gcount, bcount, acount);
 
 
     vec4 color = incolor;
@@ -45,8 +52,6 @@ void main(void) {
 
     vec2 entry = mod(gl_FragCoord.xy, vec2(bayerSize, bayerSize));
 
-    float r = 1.0 / monitorGamma;
-
-    gl_FragColor = nearestColour(inColor + r * (bayer[int(entry.y)][int(entry.x)] / bayerDivider - 0.5));
+    gl_FragColor = nearestColour(inColor + spread * (bayer[int(entry.y)][int(entry.x)] / bayerDivider - 0.5));
     //gl_FragColor = nearestColour(inColor);
 }

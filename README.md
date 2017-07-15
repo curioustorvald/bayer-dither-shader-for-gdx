@@ -2,7 +2,7 @@
 Bayer ordered dithering shader for LibGDX
 
 
-You can configure "steps" of each R, G, and B channel to your taste. Look for the line ```vec4 rgbaCounts = vec4(4.0, 4.0, 4.0, 1.0);```
+You can configure "steps" of each R, G, and B channel to your taste. Look for the uniforms of '[r,g,b,a]count'
 
 
 Following preview is generated with 4-step RGB, the EGA palette.
